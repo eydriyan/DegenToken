@@ -256,6 +256,37 @@
 				"inputs": [
 					{
 						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					}
+				],
+				"name": "getRedeemedItems",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "string",
+								"name": "name",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "price",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct DegenToken.StoreItem[]",
+						"name": "",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
 						"name": "spender",
 						"type": "address"
 					},
@@ -637,11 +668,11 @@
 			]
 		},
 		"contracts/DegenToken.sol": {
-			"keccak256": "0x397f9262fcc1b55cbaaf31fafb1544d425af009d8309fdc0e67bef9c0de07711",
+			"keccak256": "0xb48d88a5c670595c150a73fa4c2e74fde1ce6b9f86bd51fc8c37ce184ecbeb1a",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://93e46b9becc618a0b9099d6b046250d69b0c725fc8469a53df5c4927953ea5ac",
-				"dweb:/ipfs/QmSxRWGLMpdosYn5LLPCBTYi53p86KPs5Wotrq7vqWmDhT"
+				"bzz-raw://0f238ff53c3a7f5ad1df1be58044c4c030769a6cbc25ee8afff6581b38da4b49",
+				"dweb:/ipfs/QmX6auGzogypA68r4m3EbPmjcDDqhUY39JsuseJpNymz8y"
 			]
 		},
 		"hardhat/console.sol": {
