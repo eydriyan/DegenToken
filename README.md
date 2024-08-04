@@ -1,10 +1,10 @@
-# Metacrafters: Degen Token Project
+# Degen Token (ERC-20): Unlocking the Future of Gaming
 
 This Solidity program demonstrates a custom ERC20 token contract called `DegenToken`. It includes functionalities for minting, transferring, burning tokens, and redeeming store items. The contract also incorporates ownership control and basic validations.
 
 ## Description
 
-The `DegenToken` contract extends OpenZeppelin's `ERC20`, `Ownable`, and `ERC20Burnable` contracts. It allows the contract owner to mint new tokens and enables users to transfer, burn tokens, and redeem store items. The contract manages a list of store items with predefined prices, which users can redeem by burning tokens.
+The `DegenToken` contract extends OpenZeppelin's `ERC20`, `Ownable`, and `ERC20Burnable` contracts. It allows the contract owner to mint new tokens and enables users to transfer, burn tokens, and redeem store items. The contract manages a list of store items with predefined prices, which users can redeem by burning tokens. Additionally, it keeps track of the items redeemed by each user.
 
 ## Functions
 
@@ -64,6 +64,16 @@ The `DegenToken` contract extends OpenZeppelin's `ERC20`, `Ownable`, and `ERC20B
   - `itemIndex` must be valid (within the range of store items).
   - The user must have a sufficient balance of tokens to cover the item's price.
 
+### Get Redeemed Items
+
+- **Function**: `getRedeemedItems(address user)`
+- **Visibility**: `public view`
+- **Description**: Retrieves the list of items redeemed by a user.
+- **Parameters**:
+  - `user`: Address of the user.
+- **Returns**:
+  - An array of `StoreItem` structs representing the items redeemed by the user.
+
 ## Events
 
 - **Event**: `ItemRedeemed(address player, string itemName, uint256 price)`
@@ -99,6 +109,8 @@ contract DegenToken is ERC20, Ownable, ERC20Burnable {
 
     StoreItem[] public storeItems;
 
+    mapping(address => StoreItem[]) private redeemedItems;
+
     constructor() ERC20("Degen", "DGN") Ownable() {
         storeItems.push(StoreItem("Bronze Card", 100));
         storeItems.push(StoreItem("Silver Card", 200));
@@ -132,11 +144,16 @@ contract DegenToken is ERC20, Ownable, ERC20Burnable {
         require(itemIndex < storeItems.length, "Item does not exist");
         StoreItem memory item = storeItems[itemIndex];
         require(balanceOf(msg.sender) >= item.price, "Insufficient balance");
-        
+
         _burn(msg.sender, item.price);
+        redeemedItems[msg.sender].push(item);
         emit ItemRedeemed(msg.sender, item.name, item.price);
     }
-    
+
+    function getRedeemedItems(address user) public view returns (StoreItem[] memory) {
+        return redeemedItems[user];
+    }
+
     event ItemRedeemed(address player, string itemName, uint256 price);
 }
 ```
